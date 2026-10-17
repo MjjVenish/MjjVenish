@@ -118,9 +118,9 @@ export const projects = [
     type: "Full-Stack · In Production",
     description:
       "Live e-commerce platform I own front-to-back — React/Next.js client with a Node.js/Express REST API, proper loading and error states.",
-    stack: ["Next.js", "Node.js", "Express.js"],
-    live: null,
-    repo: "https://github.com/MjjVenish/CarrierBag",
+    stack: ["Next.js", "React.js", "Node.js", "Express.js", " .Net Core", "C#", "SQL Server"],
+    live: "https://www.carrierbagshop.co.uk/",
+    repo: null,
     preview: "shop",
   },
   {
