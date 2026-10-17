@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 
 import "./globals.css";
-// import "../styles/globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const firaCode = Fira_Code({
@@ -13,11 +12,12 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Venish M | Full-Stack Developer",
   description:
-    "Full-Stack Developer specializing in crafting amazing web experiences. Portfolio showcasing skills, projects, and blog posts.",
+    "Venish M — Full-Stack Developer (React.js, Next.js, Node.js, TypeScript) in Chennai with 3+ years building and scaling e-commerce platforms.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0e17",
+  themeColor: "#f5f4fc",
+  colorScheme: "only light",
 };
 
 export default function RootLayout({

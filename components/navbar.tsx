@@ -2,100 +2,99 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Github, Instagram, Linkedin, Globe } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
+import { profile } from "@/lib/profile-data";
 
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
+  { label: "Services", href: "#services" },
+  { label: "Experience", href: "#experience" },
+  { label: "Work", href: "#work" },
   { label: "Blog", href: "#blog" },
   { label: "Contact", href: "#contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("#home");
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  // Highlight the nav pill for the section currently in view
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const sections = navLinks
+      .map((l) => document.querySelector(l.href))
+      .filter((el): el is Element => el !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/80 backdrop-blur-lg border-b border-border"
-          : "bg-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a
-          href="#home"
-          className="flex items-center gap-1 font-mono text-lg font-bold text-[hsl(var(--primary))]"
-        >
-          {"<C/>"}
-          <span className="text-foreground">VenishMjj</span>
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
+      <nav
+        className="glass-strong mx-auto flex max-w-7xl items-center justify-between rounded-2xl px-4 py-3"
+      >
+        <a href="#home" className="flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-lg font-bold text-background">
+            V
+          </span>
+          <span className="leading-tight">
+            <span className="block text-sm font-semibold text-foreground">
+              {profile.name}
+            </span>
+            <span className="block text-xs text-muted-foreground">
+              {profile.role}
+            </span>
+          </span>
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden items-center gap-8 md:flex">
+        <ul className="hidden items-center gap-1 lg:flex">
           {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="relative text-sm text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-            >
-              {link.label}
-            </a>
+            <li key={link.href}>
+              <a
+                href={link.href}
+                className={`relative rounded-full px-4 py-2 text-sm transition-colors ${
+                  active === link.href
+                    ? "text-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {active === link.href && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-white shadow-sm"
+                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  />
+                )}
+                {link.label}
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className="hidden items-center gap-4 md:flex">
-          <a
-            href="https://venish-chat.netlify.app/dashboard"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Live Projects"
-            className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-          >
-            <Globe className="h-5 w-5" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/venish-m-911977248/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-          >
-            <Linkedin className="h-5 w-5" />
-          </a>
-          <a
-            href="https://github.com/MjjVenish"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-          >
-            <Github className="h-5 w-5" />
-          </a>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button
-          className="text-foreground md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation"
+        <a
+          href="#contact"
+          className="hidden items-center gap-2 rounded-full border border-white bg-white/70 px-5 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-white lg:inline-flex"
         >
-          {mobileOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
+          Let&apos;s Talk
+          <ArrowUpRight className="h-4 w-4" />
+        </a>
+
+        <button
+          className="rounded-lg p-2 text-foreground lg:hidden"
+          onClick={() => setMobileOpen((o) => !o)}
+          aria-label="Toggle navigation"
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </nav>
 
@@ -103,55 +102,29 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden border-b border-border bg-background/95 backdrop-blur-lg md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+            className="glass-strong mx-auto mt-2 max-w-7xl rounded-2xl p-3 lg:hidden"
           >
-            <div className="flex flex-col gap-4 px-6 py-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <div className="flex gap-4 pt-4 border-t border-border">
-                <a
-                  href="https://venish-chat.netlify.app/dashboard"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Live Projects"
-                  className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-                >
-                  <Globe className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/venish-m-911977248/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-                >
-                  <Linkedin className="h-5 w-5" />
-                </a>
-                <a
-                  href="https://github.com/MjjVenish"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="text-muted-foreground transition-colors hover:text-[hsl(var(--primary))]"
-                >
-                  <Github className="h-5 w-5" />
-                </a>
-              </div>
-            </div>
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileOpen(false)}
+                className={`block rounded-xl px-4 py-3 text-sm ${
+                  active === link.href
+                    ? "bg-white font-medium text-foreground"
+                    : "text-muted-foreground"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </header>
   );
 }

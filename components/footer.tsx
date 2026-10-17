@@ -1,61 +1,41 @@
-"use client";
-
-import {
-  Github,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Heart,
-  Globe,
-  Mail,
-} from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+import { profile } from "@/lib/profile-data";
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/MjjVenish", label: "GitHub" },
-  {
-    icon: Linkedin,
-    href: "https://www.linkedin.com/in/venish-m-911977248/",
-    label: "LinkedIn",
-  },
-  {
-    icon: Globe,
-    href: "https://venish-chat.netlify.app/dashboard",
-    label: "Live Projects",
-  },
-  { icon: Mail, href: "mailto:venishmjj1018@mail.com", label: "Email" },
+  { icon: Github, href: profile.github, label: "GitHub" },
+  { icon: Linkedin, href: profile.linkedin, label: "LinkedIn" },
+  { icon: Mail, href: `mailto:${profile.email}`, label: "Email" },
 ];
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border bg-card/40 py-8">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 sm:flex-row sm:justify-between">
-        <a
-          href="#home"
-          className="flex items-center gap-1 font-mono text-lg font-bold text-[hsl(var(--primary))]"
-        >
-          {"<C/>"}
-          <span className="text-foreground">VenishMjj</span>
+    <footer className="mx-auto max-w-7xl px-4 pt-4 pb-8 sm:px-6">
+      <div className="glass flex flex-col items-center gap-4 rounded-3xl px-6 py-6 sm:flex-row sm:justify-between">
+        <a href="#home" className="flex items-center gap-3">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-foreground font-bold text-background">
+            V
+          </span>
+          <span className="text-sm font-semibold text-foreground">{profile.name}</span>
         </a>
 
-        <div className="flex items-center gap-4">
+        <p className="text-xs text-muted-foreground">
+          © {new Date().getFullYear()} {profile.name}. Built with Next.js & Tailwind CSS.
+        </p>
+
+        <div className="flex items-center gap-2">
           {socialLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              target="_blank"
+              target={link.href.startsWith("mailto:") ? undefined : "_blank"}
               rel="noopener noreferrer"
               aria-label={link.label}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary hover:text-[hsl(var(--primary))]"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/70 text-muted-foreground transition hover:bg-foreground hover:text-background"
             >
               <link.icon className="h-4 w-4" />
             </a>
           ))}
         </div>
-
-        <p className="flex items-center gap-1 text-sm text-muted-foreground">
-          Made with <Heart className="h-3 w-3 text-[hsl(var(--primary))]" /> by
-          Venish
-        </p>
       </div>
     </footer>
   );

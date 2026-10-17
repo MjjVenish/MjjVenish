@@ -1,86 +1,78 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import Image from "next/image";
+import { ArrowUpRight, Briefcase, Layers, Bug } from "lucide-react";
+import { stats, impact } from "@/lib/profile-data";
+import { Reveal, Eyebrow } from "@/components/section-shell";
+
+const statIcons = [Briefcase, Layers, Bug];
 
 export default function AboutSection() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section id="about" className="relative py-24" ref={ref}>
-      {/* Decorative line */}
-      <div className="absolute left-1/2 top-0 h-24 w-px bg-linear-to-b from-transparent via-primary/30 to-transparent" />
+    <section id="about" className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
+      <Reveal className="glass grid gap-10 rounded-3xl p-6 sm:p-10 lg:grid-cols-2">
+        <div>
+          <Eyebrow>About Me</Eyebrow>
+          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
+            Building for Performance,
+            <br />
+            Shipping with Confidence
+          </h2>
 
-      <div className="mx-auto max-w-7xl px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="mb-12 text-center"
-        >
-          <span className="inline-block rounded-md border border-primary/30 bg-primary/5 px-4 py-1.5 font-mono text-sm text-[hsl(var(--primary))]">
-            About Me
-          </span>
-        </motion.div>
-
-        <div className="flex flex-col items-center gap-12 lg:flex-row lg:gap-16">
-          {/* Left: Text Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="flex-1"
-          >
-            <div className="rounded-2xl border border-border bg-[hsl(var(--card)/0.6)] p-8 backdrop-blur-sm">
-              <h3 className="mb-4 font-mono text-2xl font-bold text-[hsl(var(--primary))]">
-                Hello!
-              </h3>
-              <p className="mb-4 leading-relaxed text-muted-foreground">
-                My name is Venish and I specialize in web development that
-                utilizes{" "}
-                <span className="text-[hsl(var(--primary))]">HTML</span>,{" "}
-                <span className="text-[hsl(var(--primary))]">CSS</span>,{" "}
-                <span className="text-[hsl(var(--primary))]">JS</span>,{" "}
-                <span className="text-[hsl(var(--primary))]">React</span>, and{" "}
-                <span className="text-[hsl(var(--primary))]">Node.js</span>.
-              </p>
-              <p className="mb-4 leading-relaxed text-muted-foreground">
-                I am a highly motivated individual and eternal optimist
-                dedicated to writing clean, readable code that can be easily
-                maintained and scaled. I bring an analytical mindset and
-                attention to detail, taking pride in my ability to find elegant
-                solutions to complex problems.
-              </p>
-              <p className="leading-relaxed text-muted-foreground">
-                When I am not coding, I am writing blogs, reading, or picking up
-                some new hands-on skills. I like to learn my perspective and
-                belief systems challenged so that I see the world through
-                ever-expanding eyes.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Right: Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="shrink-0"
-          >
-            <div className="relative h-72 w-72 overflow-hidden rounded-2xl border border-border lg:h-80 lg:w-80">
-              <Image
-                src="/images/about.jpg"
-                alt="Developer workspace with multiple monitors"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent" />
-            </div>
-          </motion.div>
+          <div className="glass-strong mt-8 grid grid-cols-3 gap-2 rounded-2xl p-4">
+            {stats.map((s, i) => {
+              const Icon = statIcons[i];
+              return (
+                <div key={s.label} className="px-2">
+                  <span className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <p className="text-2xl font-semibold text-foreground">
+                    {s.value}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{s.label}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+
+        <div className="flex flex-col justify-center">
+          <p className="leading-relaxed text-muted-foreground">
+            I&apos;m a full-stack developer with{" "}
+            <strong className="font-semibold text-foreground">
+              3+ years of production experience
+            </strong>{" "}
+            building and scaling e-commerce platforms. At BM e-Solutions I
+            maintain a multi-tenant Next.js codebase that runs nine localised
+            storefronts for Rocaba Group.
+          </p>
+          <p className="mt-4 leading-relaxed text-muted-foreground">
+            I care about measurable outcomes — fast pages, quick APIs and happy
+            customers — and I&apos;m comfortable owning a feature from the UI
+            through REST APIs down to PostgreSQL or MySQL.
+          </p>
+
+          <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {impact.map((m) => (
+              <div key={m.label} className="rounded-xl bg-white/60 p-3">
+                <dt className="sr-only">{m.label}</dt>
+                <dd className="gradient-text text-xl font-semibold">{m.value}</dd>
+                <dd className="text-[11px] leading-tight text-muted-foreground">
+                  {m.label}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <a
+            href="#experience"
+            className="mt-6 inline-flex w-fit items-center gap-2 rounded-full border border-white bg-white/70 px-5 py-2.5 text-sm font-medium text-foreground shadow-sm transition hover:bg-white"
+          >
+            See My Experience
+            <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
+      </Reveal>
     </section>
   );
 }

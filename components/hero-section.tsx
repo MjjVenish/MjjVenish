@@ -1,185 +1,128 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  Download,
-  Github,
-  Linkedin,
-  Twitter,
-  ArrowDown,
-  X,
-} from "lucide-react";
+import { ArrowUpRight, Download, Sparkles, MapPin } from "lucide-react";
+import { profile } from "@/lib/profile-data";
 
-const stats = [
-  { number: "4", label: "Programming\nLanguages" },
-  { number: "6", label: "Development\nTools" },
-  { number: "3", label: "Years of\nExperience" },
-];
+const shipsWith = ["Next.js", "React", "Node.js", "TypeScript", "Supabase"];
 
 export default function HeroSection() {
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
-    >
-      {/* Background glow effect */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-40 right-0 h-150 w-150 rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute bottom-0 -left-20 h-100 w-100 rounded-full bg-primary/3 blur-[100px]" />
-      </div>
+    <section id="home" className="mx-auto max-w-7xl px-4 pt-28 pb-4 sm:px-6">
+      <div className="glass relative overflow-hidden rounded-3xl px-6 py-10 sm:px-12 sm:py-14">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
+          {/* Left: copy */}
+          <div className="fade-up">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+              Hello, I&apos;m
+            </p>
+            <h1 className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl">
+              {profile.name}
+            </h1>
+            <p className="gradient-text mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+              {profile.role}
+            </p>
+            <p className="mt-5 max-w-md leading-relaxed text-muted-foreground">
+              I build fast, scalable e-commerce experiences with React, Next.js
+              and Node.js — owning features end-to-end, from UI to REST APIs to
+              relational databases.
+            </p>
+            <p className="mt-3 flex items-center gap-1.5 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 text-primary" />
+              {profile.location}
+            </p>
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center gap-12 px-6 pt-24 pb-16 lg:flex-row lg:gap-16 lg:pt-32">
-        {/* Left: Profile Card */}
-        <motion.div
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="shrink-0"
-        >
-          <div className="relative rounded-2xl border border-border bg-[hsl(var(--card)/0.8)] p-6 backdrop-blur-sm">
-            <div className="flex flex-col items-center gap-4">
-              <div className="relative h-28 w-28 overflow-hidden rounded-full border-2 border-primary">
-                <Image
-                  src="/images/profile.jpg"
-                  alt="Venish M - Full Stack Developer"
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              <div className="text-center">
-                <h3 className="text-lg font-bold text-foreground">Venish</h3>
-                <p className="text-sm text-[hsl(var(--primary))]">
-                  Full-Stack Developer
-                </p>
-              </div>
-              <div className="flex flex-col gap-2 text-xs text-muted-foreground">
-                <span>venishmjj1018@email.com</span>
-                <span>Chennai, India</span>
-                <span>Full-Time • Freelance</span>
-              </div>
-              <div className="flex gap-3 pt-2">
-                <a
-                  href="https://github.com/MjjVenish"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="GitHub"
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-muted-foreground transition-colors hover:bg-primary hover:bg-[hsl(var(--primary))] hover:text-black"
-                >
-                  <Github className="h-4 w-4" />
-                </a>
-                <a
-                  href="https://www.linkedin.com/in/venish-m-911977248/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="LinkedIn"
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-muted-foreground transition-colors hover:bg-primary hover:bg-[hsl(var(--primary))] hover:text-black"
-                >
-                  <Linkedin className="h-4 w-4" />
-                </a>
-                <a
-                  href="https://x.com/home"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Twitter"
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-muted-foreground transition-colors hover:bg-primary hover:bg-[hsl(var(--primary))] hover:text-black"
-                >
-                  <X className="h-5 w-5" />
-                </a>
-              </div>
+            <div className="mt-8 flex flex-wrap gap-3">
               <a
-                href="/VenishResume.pdf"
-                download
-                className="mt-2 flex text-black items-center gap-2 rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold bg-[hsl(var(--primary))] transition-all hover:brightness-110 group-hover:text-black"
+                href="#work"
+                className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background shadow-lg shadow-foreground/20 transition hover:-translate-y-0.5"
               >
-                <Download className="h-4 w-4" />
+                View My Work
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a
+                href={profile.resume}
+                download
+                className="inline-flex items-center gap-2 rounded-full border border-white bg-white/70 px-6 py-3 text-sm font-medium text-foreground shadow-sm transition hover:-translate-y-0.5 hover:bg-white"
+              >
                 Download CV
+                <Download className="h-4 w-4" />
               </a>
             </div>
+
+            <div className="mt-10">
+              <p className="mb-3 text-xs text-muted-foreground">Shipping with</p>
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {shipsWith.map((t) => (
+                  <li
+                    key={t}
+                    className="text-lg font-semibold tracking-tight text-foreground/35"
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </motion.div>
 
-        {/* Center: Main Text */}
-        <div className="flex-1 text-center lg:text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+          {/* Right: photo */}
+          <div
+            className="fade-up relative mx-auto w-full max-w-sm"
+            style={{ animationDelay: "150ms" }}
           >
-            <p className="mb-2 font-mono text-sm tracking-wider text-[hsl(var(--primary))]">
-              {"<Developer />"}
-            </p>
-            <h1 className="text-4xl font-bold leading-tight text-foreground sm:text-5xl lg:text-6xl">
-              Hey <span className="inline-block animate-pulse">{"I'm "}</span>
-              <span className="text-[hsl(var(--primary))]">Venish,</span>
-              <br />
-              Full-Stack Developer
-            </h1>
-            <p className="mt-4 max-w-lg text-muted-foreground leading-relaxed">
-              I build scalable, high-performance web applications that help
-              businesses grow and deliver exceptional user experiences. If
-              you're looking for a developer who turns ideas into reliable,
-              production-ready solutions — let’s connect.
-            </p>
-          </motion.div>
+            <div className="absolute -inset-4 rounded-[2.5rem] bg-linear-to-br from-violet-300/50 via-indigo-200/40 to-white/0 blur-2xl" />
+            <div className="relative rounded-4xl border border-white/90 bg-white/40 p-3 shadow-2xl shadow-violet-500/10 backdrop-blur-xl">
+              <div className="relative aspect-3/4 overflow-hidden rounded-3xl">
+                <Image
+                  src={profile.photo}
+                  alt={`${profile.name} — ${profile.role}`}
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 384px, 90vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            className="mt-8"
-          >
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 font-mono text-lg text-[hsl(var(--primary))] transition-all hover:gap-3"
-            >
-              {"Let's Talk"}
-              <span className="text-xl">{">"}</span>
-            </a>
-          </motion.div>
+            {/* Experience badge */}
+            <div className="glass-strong animate-float absolute -top-4 -right-3 rounded-2xl px-4 py-3 text-center sm:-right-8">
+              <p className="text-3xl font-semibold text-foreground">3+</p>
+              <p className="text-[11px] leading-tight text-muted-foreground">
+                Years of
+                <br />
+                Experience
+              </p>
+            </div>
+
+            {/* Sparkle orb */}
+            <div className="glass-strong absolute top-1/2 -left-5 flex h-12 w-12 items-center justify-center rounded-full sm:-left-7">
+              <Sparkles className="h-5 w-5 text-primary" />
+            </div>
+
+            {/* Impact card */}
+            <div className="glass-strong animate-float-delayed absolute -right-3 -bottom-5 w-44 rounded-2xl p-3 sm:-right-10">
+              <p className="text-[11px] text-muted-foreground">Page load time</p>
+              <p className="text-lg font-semibold text-foreground">−35%</p>
+              <svg viewBox="0 0 120 32" className="mt-1 h-8 w-full" aria-hidden>
+                <defs>
+                  <linearGradient id="spark" x1="0" x2="1">
+                    <stop offset="0" stopColor="hsl(258 84% 62%)" />
+                    <stop offset="1" stopColor="hsl(222 92% 66%)" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M2 6 L18 9 L32 7 L46 14 L60 12 L74 19 L88 18 L102 25 L118 28"
+                  fill="none"
+                  stroke="url(#spark)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
-
-        {/* Right: Stats */}
-        <motion.div
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-row gap-6 lg:flex-col lg:gap-8"
-        >
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.8 + i * 0.15 }}
-              className="flex items-center gap-3"
-            >
-              <span className="text-3xl font-bold text-[hsl(var(--primary))] lg:text-4xl">
-                {stat.number}
-              </span>
-              <span className="whitespace-pre-line text-xs text-muted-foreground leading-tight">
-                {stat.label}
-              </span>
-            </motion.div>
-          ))}
-        </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
-          <ArrowDown className="h-5 w-5 text-[hsl(var(--primary))]/60" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }
