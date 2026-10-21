@@ -14,7 +14,8 @@ import {
   Linkedin,
 } from "lucide-react";
 import { profile } from "@/lib/profile-data";
-import { Reveal, Eyebrow } from "@/components/section-shell";
+import { SectionHeading } from "@/components/section-shell";
+import { MotionGroup, MotionItem } from "@/components/motion";
 
 const contactInfo = [
   { icon: Mail, value: profile.email, href: `mailto:${profile.email}` },
@@ -42,7 +43,7 @@ type FormStatus = "idle" | "submitting" | "success" | "error";
 const empty: FormData = { name: "", email: "", subject: "", message: "" };
 
 const fieldClass =
-  "w-full rounded-xl border border-white bg-white/70 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 shadow-sm transition focus:border-primary/50 focus:ring-2 focus:ring-primary/20 focus:outline-none disabled:opacity-50";
+  "w-full rounded-xl border border-surface bg-surface/70 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 shadow-sm transition focus:border-primary/50 focus:ring-2 focus:ring-primary/20 focus:outline-none disabled:opacity-50";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState<FormData>(empty);
@@ -94,19 +95,36 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="mx-auto max-w-7xl px-4 py-4 sm:px-6">
-      <Reveal className="glass grid gap-10 rounded-3xl p-6 sm:p-10 lg:grid-cols-[1fr_1.4fr]">
-        <div>
-          <Eyebrow>Let&apos;s Connect</Eyebrow>
-          <h2 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-            Have a project in mind?
-            <br />
-            Let&apos;s build something fast together.
-          </h2>
+      <MotionGroup
+        effect="up"
+        stagger={0.15}
+        delay={0.1}
+        amount={0.15}
+        className="glass grid gap-10 rounded-3xl p-6 sm:p-10 lg:grid-cols-[1fr_1.4fr]"
+      >
+        <MotionItem effect="left">
+          <MotionGroup stagger={0.1}>
+            <SectionHeading
+              eyebrow="Let's Connect"
+              title={
+                <>
+                  Have a project in mind?
+                  <br />
+                  Let&apos;s build something fast together.
+                </>
+              }
+            />
+          </MotionGroup>
 
-          <ul className="mt-8 flex flex-col gap-4">
+          <MotionGroup as="ul" stagger={0.1} delay={0.3} className="mt-8 flex flex-col gap-4">
             {contactInfo.map(({ icon: Icon, value, href }) => (
-              <li key={value} className="flex items-center gap-3 text-sm text-muted-foreground">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/80 text-primary shadow-sm">
+              <MotionItem
+                as="li"
+                key={value}
+                effect="left"
+                className="flex items-center gap-3 text-sm text-muted-foreground"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-surface/80 text-primary shadow-sm">
                   <Icon className="h-4 w-4" />
                 </span>
                 {href ? (
@@ -116,30 +134,36 @@ export default function ContactSection() {
                 ) : (
                   value
                 )}
-              </li>
+              </MotionItem>
             ))}
-          </ul>
+          </MotionGroup>
 
-          <div className="mt-8 flex gap-3">
+          <MotionGroup stagger={0.1} delay={0.5} className="mt-8 flex gap-3">
             {[
               { href: profile.github, Icon: Github, label: "GitHub" },
               { href: profile.linkedin, Icon: Linkedin, label: "LinkedIn" },
             ].map(({ href, Icon, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-muted-foreground shadow-sm transition hover:bg-foreground hover:text-background"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
+              <MotionItem key={label} effect="pop">
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-surface/80 text-muted-foreground shadow-sm transition hover:bg-foreground hover:text-background"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              </MotionItem>
             ))}
-          </div>
-        </div>
+          </MotionGroup>
+        </MotionItem>
 
-        <form onSubmit={handleSubmit} className="glass-strong rounded-2xl p-5 sm:p-6">
+        <MotionItem
+          as="form"
+          effect="right"
+          onSubmit={handleSubmit}
+          className="glass-strong rounded-2xl p-5 sm:p-6"
+        >
           {fieldErrors.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: -8 }}
@@ -218,8 +242,8 @@ export default function ContactSection() {
               </>
             )}
           </button>
-        </form>
-      </Reveal>
+        </MotionItem>
+      </MotionGroup>
     </section>
   );
 }

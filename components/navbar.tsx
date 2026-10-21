@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { profile } from "@/lib/profile-data";
+import ThemeToggle from "@/components/theme-toggle";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -38,8 +39,10 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6">
+      {/* Scroll progress */}
+      <div className="scroll-progress fixed inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-linear-to-r from-primary to-accent" />
       <nav
-        className="glass-strong mx-auto flex max-w-7xl items-center justify-between rounded-2xl px-4 py-3"
+        className="glass-strong fade-up mx-auto flex max-w-7xl items-center justify-between rounded-2xl px-4 py-3"
       >
         <a href="#home" className="flex items-center gap-3">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-foreground text-lg font-bold text-background">
@@ -70,7 +73,7 @@ export default function Navbar() {
                 {active === link.href && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-white shadow-sm"
+                    className="absolute inset-0 -z-10 rounded-full bg-surface shadow-sm"
                     transition={{ type: "spring", stiffness: 380, damping: 32 }}
                   />
                 )}
@@ -80,22 +83,24 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden items-center gap-2 rounded-full border border-white bg-white/70 px-5 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-white lg:inline-flex"
-        >
-          Let&apos;s Talk
-          <ArrowUpRight className="h-4 w-4" />
-        </a>
-
-        <button
-          className="rounded-lg p-2 text-foreground lg:hidden"
-          onClick={() => setMobileOpen((o) => !o)}
-          aria-label="Toggle navigation"
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <a
+            href="#contact"
+            className="group hidden items-center gap-2 rounded-full border border-surface bg-surface/70 px-5 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface lg:inline-flex"
+          >
+            Let&apos;s Talk
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
+          <button
+            className="rounded-lg p-2 text-foreground lg:hidden"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label="Toggle navigation"
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
@@ -115,7 +120,7 @@ export default function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className={`block rounded-xl px-4 py-3 text-sm ${
                   active === link.href
-                    ? "bg-white font-medium text-foreground"
+                    ? "bg-surface font-medium text-foreground"
                     : "text-muted-foreground"
                 }`}
               >

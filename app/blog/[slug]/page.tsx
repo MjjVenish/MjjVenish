@@ -18,9 +18,27 @@ export async function generateMetadata({
   const post = getPostBySlug(slug);
   if (!post) return { title: "Post Not Found" };
 
+  const url = `/blog/${post.slug}`;
   return {
-    title: `${post.title} | Venish M`,
+    title: post.title,
     description: post.excerpt,
+    keywords: [post.tag, "Venish M", "Web Development", "Next.js", "React"],
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      url,
+      title: post.title,
+      description: post.excerpt,
+      authors: [post.author],
+      tags: [post.tag],
+      images: [{ url: post.image, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+      images: [post.image],
+    },
   };
 }
 

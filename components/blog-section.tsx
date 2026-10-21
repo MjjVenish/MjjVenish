@@ -5,15 +5,19 @@ import Link from "next/link";
 import { ArrowUpRight, Calendar, Clock } from "lucide-react";
 import { posts } from "@/lib/blog-data";
 import { SectionShell } from "@/components/section-shell";
+import { MotionGroup, MotionItem } from "@/components/motion";
 
 export default function BlogSection() {
   return (
     <SectionShell id="blog" eyebrow="Writing" title="From the Blog">
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <MotionGroup stagger={0.15} delay={0.2} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <article
+          <MotionItem
+            as="article"
             key={post.slug}
-            className="glass-strong group overflow-hidden rounded-2xl transition hover:-translate-y-1"
+            effect="up"
+            lift
+            className="glass-strong lift group overflow-hidden rounded-2xl"
           >
             <Link href={`/blog/${post.slug}`} className="block">
               <div className="relative h-44 overflow-hidden">
@@ -24,7 +28,7 @@ export default function BlogSection() {
                   sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw"
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <span className="absolute top-3 left-3 rounded-full bg-white/85 px-3 py-1 text-xs font-medium text-primary backdrop-blur">
+                <span className="absolute top-3 left-3 rounded-full bg-surface/85 px-3 py-1 text-xs font-medium text-primary backdrop-blur">
                   {post.tag}
                 </span>
               </div>
@@ -50,9 +54,9 @@ export default function BlogSection() {
                 </div>
               </div>
             </Link>
-          </article>
+          </MotionItem>
         ))}
-      </div>
+      </MotionGroup>
     </SectionShell>
   );
 }

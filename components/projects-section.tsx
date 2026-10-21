@@ -3,6 +3,7 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import { profile, projects } from "@/lib/profile-data";
 import { SectionShell } from "@/components/section-shell";
+import { MotionGroup, MotionItem } from "@/components/motion";
 
 type Preview = (typeof projects)[number]["preview"];
 
@@ -11,14 +12,14 @@ function ProjectPreview({ kind }: { kind: Preview }) {
   if (kind === "cricket") {
     return (
       <div className="flex h-full flex-col gap-2 p-4">
-        <div className="flex items-center justify-between rounded-lg bg-white/90 px-3 py-2 shadow-sm">
+        <div className="flex items-center justify-between rounded-lg bg-surface/90 px-3 py-2 shadow-sm">
           <span className="text-[10px] font-semibold text-foreground">IND XI vs CSK XI</span>
           <span className="flex items-center gap-1 text-[9px] font-semibold text-red-500">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-red-500" />
             LIVE
           </span>
         </div>
-        <div className="rounded-lg bg-white/90 px-3 py-2 shadow-sm">
+        <div className="rounded-lg bg-surface/90 px-3 py-2 shadow-sm">
           <p className="text-xl font-bold text-foreground">
             142/4 <span className="text-xs font-normal text-muted-foreground">(16.3)</span>
           </p>
@@ -28,7 +29,7 @@ function ProjectPreview({ kind }: { kind: Preview }) {
                 key={i}
                 className={`flex h-5 w-5 items-center justify-center rounded-full text-[8px] font-bold ${
                   b === "6" || b === "4"
-                    ? "bg-violet-500 text-white"
+                    ? "bg-primary text-primary-foreground"
                     : b === "Nb"
                       ? "bg-amber-400 text-white"
                       : "bg-secondary text-foreground"
@@ -41,7 +42,7 @@ function ProjectPreview({ kind }: { kind: Preview }) {
         </div>
         <div className="mt-auto flex h-8 items-end gap-1">
           {[30, 45, 25, 60, 40, 75, 55, 90].map((h, i) => (
-            <span key={i} className="flex-1 rounded-sm bg-violet-400/70" style={{ height: `${h}%` }} />
+            <span key={i} className="flex-1 rounded-sm bg-primary/60" style={{ height: `${h}%` }} />
           ))}
         </div>
       </div>
@@ -51,10 +52,10 @@ function ProjectPreview({ kind }: { kind: Preview }) {
     return (
       <div className="grid h-full grid-cols-3 gap-2 p-4">
         {[0, 1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="flex flex-col rounded-lg bg-white/90 p-1.5 shadow-sm">
-            <div className="flex-1 rounded-md bg-linear-to-br from-indigo-100 to-violet-200" />
+          <div key={i} className="flex flex-col rounded-lg bg-surface/90 p-1.5 shadow-sm">
+            <div className="flex-1 rounded-md bg-linear-to-br from-accent/20 to-primary/35" />
             <div className="mt-1 h-1 w-3/4 rounded bg-foreground/15" />
-            <div className="mt-0.5 h-1 w-1/3 rounded bg-violet-400/60" />
+            <div className="mt-0.5 h-1 w-1/3 rounded bg-primary/60" />
           </div>
         ))}
       </div>
@@ -65,11 +66,11 @@ function ProjectPreview({ kind }: { kind: Preview }) {
       {["UK", "IE", "FR", "DE"].map((c, i) => (
         <div
           key={c}
-          className="absolute w-3/5 rounded-lg bg-white/95 p-2 shadow-md"
+          className="absolute w-3/5 rounded-lg bg-surface/95 p-2 shadow-md"
           style={{ left: `${10 + i * 9}%`, top: `${12 + i * 16}%` }}
         >
           <div className="flex items-center gap-1.5">
-            <span className="rounded bg-violet-500 px-1 text-[8px] font-bold text-white">{c}</span>
+            <span className="rounded bg-primary px-1 text-[8px] font-bold text-white">{c}</span>
             <span className="h-1 flex-1 rounded bg-foreground/15" />
           </div>
           <div className="mt-1.5 h-1 w-2/3 rounded bg-foreground/10" />
@@ -80,9 +81,9 @@ function ProjectPreview({ kind }: { kind: Preview }) {
 }
 
 const previewBg: Record<Preview, string> = {
-  cricket: "from-violet-200 via-indigo-100 to-white",
-  shop: "from-indigo-200 via-violet-100 to-white",
-  tenants: "from-fuchsia-100 via-violet-100 to-indigo-100",
+  cricket: "from-primary/25 via-accent/10 to-surface",
+  shop: "from-accent/25 via-primary/10 to-surface",
+  tenants: "from-primary/15 via-accent/15 to-primary/10",
 };
 
 export default function ProjectsSection() {
@@ -96,20 +97,23 @@ export default function ProjectsSection() {
           href={profile.github}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full border border-white bg-white/70 px-5 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-white"
+          className="inline-flex items-center gap-2 rounded-full border border-surface bg-surface/70 px-5 py-2 text-sm font-medium text-foreground shadow-sm transition hover:bg-surface"
         >
           View GitHub
           <ArrowUpRight className="h-4 w-4" />
         </a>
       }
     >
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <MotionGroup stagger={0.15} delay={0.2} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
         {projects.map((p) => {
           const href = p.live ?? p.repo;
           return (
-            <article
+            <MotionItem
+              as="article"
               key={p.title}
-              className="glass-strong group flex flex-col overflow-hidden rounded-2xl transition hover:-translate-y-1"
+              effect="up"
+              lift
+              className="glass-strong lift group flex flex-col overflow-hidden rounded-2xl"
             >
               <div className={`h-48 bg-linear-to-br ${previewBg[p.preview]}`}>
                 <ProjectPreview kind={p.preview} />
@@ -126,7 +130,7 @@ export default function ProjectsSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`Open ${p.title}`}
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white shadow-sm transition group-hover:bg-foreground group-hover:text-background"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface shadow-sm transition group-hover:bg-foreground group-hover:text-background"
                     >
                       <ArrowUpRight className="h-4 w-4" />
                     </a>
@@ -153,10 +157,10 @@ export default function ProjectsSection() {
                   )}
                 </div>
               </div>
-            </article>
+            </MotionItem>
           );
         })}
-      </div>
+      </MotionGroup>
     </SectionShell>
   );
 }

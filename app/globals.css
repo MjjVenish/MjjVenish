@@ -153,14 +153,15 @@
   50% { transform: translateY(-14px); }
 }
 
+/* Entry: fade + 18px rise + soft scale (transform/opacity only — GPU composited) */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(28px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(0.97); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes zoom-in {
-  from { opacity: 0; transform: scale(0.94) translateY(16px); }
-  to { opacity: 1; transform: none; }
+  from { opacity: 0; transform: translate3d(0, 16px, 0) scale(0.95); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
 @keyframes drift {
@@ -179,21 +180,7 @@
   to { stroke-dashoffset: 0; }
 }
 
-/* ===== Motion helpers (pure CSS — content is visible without JS) ===== */
-.fade-up {
-  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.zoom-in {
-  animation: zoom-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.draw-line {
-  stroke-dasharray: 200;
-  animation: draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
-}
-
-/* Slow drifting background glows */
+/* ===== Motion (only for users who have not asked for reduced motion) ===== */
 .aurora {
   position: fixed;
   inset: 0;
@@ -205,7 +192,6 @@
   position: absolute;
   border-radius: 9999px;
   filter: blur(80px);
-  animation: drift 26s ease-in-out infinite;
   transition: background-color 0.6s ease;
 }
 .aurora span:nth-child(1) {
@@ -215,31 +201,42 @@
 .aurora span:nth-child(2) {
   width: 40rem; height: 30rem; top: 30%; left: -14rem;
   background: var(--glow-2);
-  animation-delay: -9s;
-  animation-duration: 32s;
 }
 .aurora span:nth-child(3) {
   width: 36rem; height: 28rem; bottom: -8rem; right: 5%;
   background: var(--glow-3);
-  animation-delay: -17s;
-  animation-duration: 38s;
 }
 
-/* Scroll-linked reveals & progress bar where supported; otherwise static */
-@supports (animation-timeline: view()) {
-  .reveal {
-    animation: fade-up linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 35%;
+@media (prefers-reduced-motion: no-preference) {
+  /* Page-load entrance for the hero (time based, no JS needed) */
+  .fade-up {
+    animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  .reveal-item {
-    animation: fade-up linear both;
-    animation-timeline: view();
-    animation-range: entry 5% entry 55%;
+  .zoom-in {
+    animation: zoom-in 1s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
-  .scroll-progress {
-    animation: grow-x linear both;
-    animation-timeline: scroll(root);
+  .draw-line {
+    stroke-dasharray: 200;
+    animation: draw 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both;
+  }
+
+  .aurora span {
+    animation: drift 26s ease-in-out infinite;
+  }
+  .aurora span:nth-child(2) {
+    animation-delay: -9s;
+    animation-duration: 32s;
+  }
+  .aurora span:nth-child(3) {
+    animation-delay: -17s;
+    animation-duration: 38s;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: grow-x linear both;
+      animation-timeline: scroll(root);
+    }
   }
 }
 
@@ -294,25 +291,22 @@
 }
 
 @utility animate-float {
-  animation: float 7s ease-in-out infinite;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: float 7s ease-in-out infinite;
+  }
 }
 
 @utility animate-float-delayed {
-  animation: float 7s ease-in-out 2.5s infinite;
+  @media (prefers-reduced-motion: no-preference) {
+    animation: float 7s ease-in-out 2.5s infinite;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .animate-float,
-  .animate-float-delayed,
-  .fade-up,
-  .zoom-in,
-  .draw-line,
-  .reveal,
-  .reveal-item,
-  .aurora span {
-    animation: none;
+  .scroll-progress {
+    display: none;
   }
 }
