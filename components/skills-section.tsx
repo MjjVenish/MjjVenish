@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUpRight, Code2, Server, Gauge, Plug } from "lucide-react";
-import { services, technologies, toolbelt } from "@/lib/profile-data";
+import { services } from "@/lib/profile-data";
 import { SectionShell } from "@/components/section-shell";
 import { MotionGroup, MotionItem } from "@/components/motion";
 
@@ -39,53 +39,6 @@ export function ServicesSection() {
             </MotionItem>
           );
         })}
-      </MotionGroup>
-    </SectionShell>
-  );
-}
-
-export default function SkillsSection() {
-  return (
-    <SectionShell id="skills" eyebrow="Tools & Skills" title="Technologies I Use">
-      {/* Tiles pop in with a quick spring cascade */}
-      <MotionGroup
-        as="ul"
-        stagger={0.05}
-        delay={0.2}
-        className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6"
-      >
-        {technologies.map((t) => (
-          <MotionItem
-            as="li"
-            key={t.name}
-            effect="pop"
-            lift
-            className="glass-strong lift flex flex-col items-center gap-2 rounded-2xl px-2 py-4"
-          >
-            <span
-              className="flex h-10 w-10 items-center justify-center rounded-xl text-sm font-bold text-white"
-              style={{ backgroundColor: t.color }}
-            >
-              {t.short}
-            </span>
-            <span className="text-center text-xs text-muted-foreground">
-              {t.name}
-            </span>
-          </MotionItem>
-        ))}
-      </MotionGroup>
-
-      <MotionGroup stagger={0.04} className="mt-6 flex flex-wrap gap-2">
-        {toolbelt.map((tool) => (
-          <MotionItem
-            as="span"
-            key={tool}
-            effect="fade"
-            className="rounded-full border border-surface bg-surface/60 px-3 py-1 text-xs text-muted-foreground"
-          >
-            {tool}
-          </MotionItem>
-        ))}
       </MotionGroup>
     </SectionShell>
   );

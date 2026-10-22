@@ -207,7 +207,52 @@
   background: var(--glow-3);
 }
 
+/* ===== Skill Network "lab" panel — always a deep navy, in both themes ===== */
+.skill-lab {
+  color: #e2e8f0;
+  background:
+    radial-gradient(40rem 26rem at 50% 45%, hsl(205 90% 45% / 0.18), transparent 65%),
+    radial-gradient(30rem 20rem at 0% 0%, hsl(258 85% 60% / 0.16), transparent 60%),
+    radial-gradient(30rem 20rem at 100% 100%, hsl(190 90% 45% / 0.12), transparent 60%),
+    linear-gradient(180deg, #070b18 0%, #050812 100%);
+  border: 1px solid hsl(205 80% 70% / 0.14);
+  box-shadow: 0 30px 80px -30px hsl(222 80% 5% / 0.7);
+}
+/* Faint circuit grid */
+.skill-lab::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(hsl(205 80% 70% / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(205 80% 70% / 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+@keyframes dash-flow {
+  to { stroke-dashoffset: -56; }
+}
+
+@keyframes ring-spin {
+  to { transform: rotate(360deg); }
+}
+
 @media (prefers-reduced-motion: no-preference) {
+  .dash-flow {
+    animation: dash-flow 1.6s linear infinite;
+  }
+  .ring-spin-slow {
+    animation: ring-spin 60s linear infinite;
+  }
+  .ring-spin-mid {
+    animation: ring-spin 40s linear infinite reverse;
+  }
+  .ring-spin-fast {
+    animation: ring-spin 25s linear infinite;
+  }
+
   /* Page-load entrance for the hero (time based, no JS needed) */
   .fade-up {
     animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;

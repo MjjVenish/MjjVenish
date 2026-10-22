@@ -1,7 +1,8 @@
 import Navbar from "@/components/navbar";
 import HeroSection from "@/components/hero-section";
 import AboutSection from "@/components/about-section";
-import SkillsSection, { ServicesSection } from "@/components/skills-section";
+import { ServicesSection } from "@/components/skills-section";
+import SkillNetwork from "@/components/skill-network";
 import ExperienceSection from "@/components/experience-section";
 import ProjectsSection from "@/components/projects-section";
 import ProcessSection from "@/components/process-section";
@@ -74,7 +75,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
-      <SkillsSection />
+      <SkillNetwork />
       <ExperienceSection />
       <ProjectsSection />
       <ProcessSection />
