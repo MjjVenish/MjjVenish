@@ -9,7 +9,7 @@ export const profile = {
   email: "venishmjj1018@gmail.com",
   phone: "+91 87541 53042",
   phoneHref: "tel:+918754153042",
-  resume: "/VenishResume.pdf",
+  resume: "/VenishResume.pdf?v=2026-10-29", // bump when the PDF changes (cache-bust)
   photo: "/images/venish.jpg",
   github: "https://github.com/MjjVenish",
   linkedin: "https://www.linkedin.com/in/venish-m-911977248/",

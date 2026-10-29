@@ -91,7 +91,7 @@ export default function HeroSection() {
                 </a>
                 <a
                   href={profile.resume}
-                  download
+                  download="Venish_M_Resume.pdf"
                   className="group inline-flex items-center gap-2 rounded-full border border-surface bg-surface/70 px-6 py-3 text-sm font-medium text-foreground shadow-sm transition duration-300 hover:-translate-y-0.5 hover:bg-surface"
                 >
                   Download CV
